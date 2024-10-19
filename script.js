@@ -1,28 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('sudoku-container');
     const submitButton = document.getElementById('submit-button');
-    const solution = generateSudokuSolution();
-    const puzzle = generateSudokuPuzzle(solution);
+    const levelSelect = document.getElementById('level-select');
 
-    for (let i = 0; i < 81; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
+    let solution = generateSudokuSolution();
+    let puzzle = generateSudokuPuzzle(solution, 'easy');
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.maxLength = 1;
+    function renderPuzzle(puzzle) {
+        container.innerHTML = '';
+        for (let i = 0; i < 81; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
 
-        const row = Math.floor(i / 9);
-        const col = i % 9;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.maxLength = 1;
 
-        if (puzzle[row][col] !== 0) {
-            input.value = puzzle[row][col];
-            input.disabled = true;
+            const row = Math.floor(i / 9);
+            const col = i % 9;
+
+            if (puzzle[row][col] !== 0) {
+                input.value = puzzle[row][col];
+                input.disabled = true;
+            }
+
+            cell.appendChild(input);
+            container.appendChild(cell);
         }
-
-        cell.appendChild(input);
-        container.appendChild(cell);
     }
+
+    renderPuzzle(puzzle);
+
+    levelSelect.addEventListener('change', () => {
+        const level = levelSelect.value;
+        puzzle = generateSudokuPuzzle(solution, level);
+        renderPuzzle(puzzle);
+    });
 
     submitButton.addEventListener('click', () => {
         const inputs = container.querySelectorAll('input');
@@ -65,16 +78,34 @@ function generateSudokuSolution() {
     ];
 }
 
-function generateSudokuPuzzle(solution) {
+function generateSudokuPuzzle(solution, level) {
     // This function generates a Sudoku puzzle from the solution.
-    // For simplicity, we'll remove some numbers from the solution.
+    // The number of cells to remove depends on the level.
     const puzzle = solution.map(row => row.slice());
-    const removeCount = 40; // Number of cells to remove
+    let removeCount;
 
-    for (let i = 0; i < removeCount; i++) {
+    switch (level) {
+        case 'easy':
+            removeCount = 20;
+            break;
+        case 'medium':
+            removeCount = 40;
+            break;
+        case 'hard':
+            removeCount = 60;
+            break;
+        default:
+            removeCount = 40;
+    }
+
+    let removed = 0;
+    while (removed < removeCount) {
         const row = Math.floor(Math.random() * 9);
         const col = Math.floor(Math.random() * 9);
-        puzzle[row][col] = 0;
+        if (puzzle[row][col] !== 0) {
+            puzzle[row][col] = 0;
+            removed++;
+        }
     }
 
     return puzzle;

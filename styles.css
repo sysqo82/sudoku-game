@@ -1,10 +1,15 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
+}
+
+#controls {
+    margin-bottom: 20px;
 }
 
 #sudoku-container {
@@ -13,6 +18,7 @@ body {
     grid-template-rows: repeat(9, 50px);
     gap: 1px;
     background-color: black;
+    margin-bottom: 20px; /* Add margin to create space between the grid and the button */
 }
 
 .cell {
@@ -51,4 +57,10 @@ body {
 .cell:nth-child(-n+9),
 .cell:nth-child(n+54):nth-child(-n+63) {
     border-top: 2px solid black;
+}
+
+#submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
