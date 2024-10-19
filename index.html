@@ -7,16 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="controls">
-        <label for="level-select">Select Level:</label>
-        <select id="level-select">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
+    <header>
+        <h1>Sudoku Game</h1>
+    </header>
+    <div id="main-content">
+        <aside id="help-text">
+            <h2>How to Play</h2>
+            <p>Fill the grid so that every row, every column, and every 3x3 box contains the digits 1 through 9. Select a difficulty level and start solving the puzzle. Click the submit button to check your answers.</p>
+        </aside>
+        <div id="game-area">
+            <div id="controls">
+                <label for="level-select">Select Level:</label>
+                <select id="level-select">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div id="sudoku-container"></div>
+            <button id="submit-button">Submit</button>
+        </div>
     </div>
-    <div id="sudoku-container"></div>
-    <button id="submit-button">Submit</button>
     <script src="script.js"></script>
 </body>
 </html>

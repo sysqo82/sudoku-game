@@ -32,9 +32,11 @@ class SudokuGame {
 
             if (value !== this.solution[row][col]) {
                 input.style.backgroundColor = 'red';
+                input.style.color = 'white'; // Change text color to white for incorrect answers
                 isCorrect = false;
             } else {
                 input.style.backgroundColor = 'green';
+                input.style.color = 'black'; // Ensure correct answers have black text
             }
         });
 
