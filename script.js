@@ -63,19 +63,59 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function generateSudokuSolution() {
-    // This function generates a complete, valid Sudoku solution.
-    // For simplicity, we'll use a pre-defined solution here.
-    return [
-        [5, 3, 4, 6, 7, 8, 9, 1, 2],
-        [6, 7, 2, 1, 9, 5, 3, 4, 8],
-        [1, 9, 8, 3, 4, 2, 5, 6, 7],
-        [8, 5, 9, 7, 6, 1, 4, 2, 3],
-        [4, 2, 6, 8, 5, 3, 7, 9, 1],
-        [7, 1, 3, 9, 2, 4, 8, 5, 6],
-        [9, 6, 1, 5, 3, 7, 2, 8, 4],
-        [2, 8, 7, 4, 1, 9, 6, 3, 5],
-        [3, 4, 5, 2, 8, 6, 1, 7, 9]
-    ];
+    const solution = Array.from({ length: 9 }, () => Array(9).fill(0));
+    fillGrid(solution);
+    return solution;
+}
+
+function fillGrid(grid) {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (grid[row][col] === 0) {
+                shuffleArray(numbers);
+                for (let num of numbers) {
+                    if (isValid(grid, row, col, num)) {
+                        grid[row][col] = num;
+                        if (fillGrid(grid)) {
+                            return true;
+                        }
+                        grid[row][col] = 0;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function isValid(grid, row, col, num) {
+    for (let x = 0; x < 9; x++) {
+        if (grid[row][x] === num || grid[x][col] === num) {
+            return false;
+        }
+    }
+
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (grid[startRow + i][startCol + j] === num) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 function generateSudokuPuzzle(solution, level) {
