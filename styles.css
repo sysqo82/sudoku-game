@@ -6,6 +6,7 @@ body {
     background-color: #f0f0f0;
     margin: 0;
     font-family: Arial, sans-serif;
+    padding: 10px; /* Add padding to the body */
 }
 
 header {
@@ -14,21 +15,24 @@ header {
 
 #main-content {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column; /* Change to column for better mobile layout */
+    align-items: center;
     width: 100%;
     padding: 20px;
 }
 
 #help-text {
-    width: 200px;
-    margin-right: 20px;
+    width: 100%;
+    margin-bottom: 20px; /* Add margin to separate from the game area */
+    padding: 10px; /* Add padding to the help text */
+    box-sizing: border-box;
 }
 
 #game-area {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 #controls {
@@ -37,21 +41,24 @@ header {
 
 #sudoku-container {
     display: grid;
-    grid-template-columns: repeat(9, 50px);
-    grid-template-rows: repeat(9, 50px);
+    grid-template-columns: repeat(9, 1fr); /* Use fractional units for better responsiveness */
     gap: 1px;
     background-color: black;
     margin-bottom: 20px; /* Add margin to create space between the grid and the button */
+    width: 100%; /* Make the grid take full width */
+    max-width: 450px; /* Limit the maximum width */
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Make cells square */
     text-align: center;
     font-size: 20px;
     border: 1px solid #ccc;
     background-color: white;
     box-sizing: border-box;
+    position: relative;
 }
 
 .cell input {
@@ -60,6 +67,9 @@ header {
     text-align: center;
     border: none;
     font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* Add thicker borders to define 3x3 grids */
@@ -86,4 +96,22 @@ header {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+}
+
+/* Media query for larger screens */
+@media (min-width: 600px) {
+    #main-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    #help-text {
+        width: 200px;
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+
+    #game-area {
+        width: auto;
+    }
 }
