@@ -1,0 +1,21 @@
+{
+  "name": "sudoku-game",
+  "version": "1.0.0",
+  "description": "A simple Sudoku game implemented in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "keywords": [
+    "sudoku",
+    "game",
+    "javascript"
+  ],
+  "author": "Assaf Itzikson",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
+}
